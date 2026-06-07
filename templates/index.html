@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>LeadMaster - לידים איכותיים לעסק שלך</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header>
+
+<div class="container nav">
+
+<div class="logo-area">
+<img
+src="{{ url_for('static', filename='images/logo.png') }}"
+alt="LeadMaster Logo"
+class="logo"
+>
+</div>
+
+<nav>
+<a href="#services">שירותים</a>
+<a href="#about">אודות</a>
+<a href="#contact">יצירת קשר</a>
+</nav>
+
+</div>
+
+</header>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>
+{{ settings.hero_title }}
+</h1>
+
+<p>
+{{ settings.hero_subtitle }}
+</p>
+
+<a href="#lead-form" class="btn">
+לקבלת הצעת מחיר
+</a>
+
+</div>
+
+<div class="hero-image">
+
+<img
+src="{{ url_for('static', filename='images/hero.jpg') }}"
+alt="LeadMaster AI Model"
+>
+
+</div>
+
+</section>
+
+<section id="services" class="services">
+
+<h2>השירותים שלנו</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>יצירת לידים איכותיים</h3>
+<p>
+אספקת לידים חמים וממוקדים לעסקים בכל תחום.
+</p>
+</div>
+
+<div class="card">
+<h3>מודלים ודוגמניות AI</h3>
+<p>
+יצירת דוגמניות AI קבועות לעסק, לרשתות חברתיות ולקמפיינים.
+</p>
+</div>
+
+<div class="card">
+<h3>אוטומציות שיווק</h3>
+<p>
+מערכות חכמות לניהול לקוחות, מעקב והגדלת מכירות.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="about" class="about">
+
+<h2>למה לבחור ב-LeadMaster?</h2>
+
+<p>
+
+אנחנו משלבים טכנולוגיית AI מתקדמת יחד עם מערכות לידים חכמות
+כדי לעזור לעסקים לקבל יותר לקוחות, יותר פגישות ויותר מכירות.
+
+בין אם אתם מחפשים לידים איכותיים או דוגמנית AI שתייצג את העסק שלכם,
+אנחנו מספקים פתרון מלא תחת קורת גג אחת.
+
+</p>
+
+</section>
+
+<section id="lead-form" class="contact">
+
+<h2>השאירו פרטים ונחזור אליכם</h2>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="success-box">
+{{ messages[0] }}
+</div>
+{% endif %}
+{% endwith %}
+
+<form action="/submit-lead" method="POST">
+
+<input
+type="text"
+name="name"
+placeholder="שם מלא"
+required
+>
+
+<input
+type="text"
+name="phone"
+placeholder="טלפון"
+required
+>
+
+<input
+type="email"
+name="email"
+placeholder="אימייל"
+>
+
+<input
+type="text"
+name="business"
+placeholder="תחום פעילות"
+>
+
+<button type="submit" class="btn">
+שלח פרטים
+</button>
+
+</form>
+
+</section>
+
+<section id="contact" class="contact-info">
+
+<h2>יצירת קשר</h2>
+
+<p>
+WhatsApp: {{ settings.whatsapp }}
+</p>
+
+<p>
+Email: {{ settings.email }}
+</p>
+
+</section>
+
+<footer>
+
+<p>
+© LeadMaster 2026
+</p>
+
+<p>
+<a href="/login">
+כניסת מנהל
+</a>
+</p>
+
+</footer>
+
+</body>
+
+</html>

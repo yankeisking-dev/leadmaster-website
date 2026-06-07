@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ניהול LeadMaster</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+font-family:'Heebo',sans-serif;
+background:#f3f4f6;
+margin:0;
+padding:0;
+}
+
+header{
+background:#0f172a;
+color:white;
+padding:20px;
+}
+
+.container{
+width:95%;
+max-width:1400px;
+margin:auto;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:15px;
+margin-top:20px;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+h1,h2{
+margin-top:0;
+}
+
+input, textarea{
+width:100%;
+padding:12px;
+margin-bottom:12px;
+border:1px solid #ddd;
+border-radius:8px;
+box-sizing:border-box;
+}
+
+button{
+background:#2563eb;
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:8px;
+cursor:pointer;
+font-weight:700;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+padding:12px;
+border-bottom:1px solid #ddd;
+text-align:right;
+}
+
+th{
+background:#f8fafc;
+}
+
+.logout{
+float:left;
+background:#dc2626;
+padding:10px 15px;
+border-radius:8px;
+color:white;
+text-decoration:none;
+}
+
+.success{
+background:#dcfce7;
+padding:12px;
+border-radius:8px;
+margin-bottom:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="container">
+
+<h1>ניהול LeadMaster</h1>
+
+<a href="/logout" class="logout">התנתק</a>
+
+</div>
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>הגדרות האתר</h2>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="success">
+{{ messages[0] }}
+</div>
+{% endif %}
+{% endwith %}
+
+<form method="POST" action="/update-settings">
+
+<label>כותרת ראשית</label>
+
+<input
+type="text"
+name="hero_title"
+value="{{ settings.hero_title }}"
+>
+
+<label>כותרת משנה</label>
+
+<input
+type="text"
+name="hero_subtitle"
+value="{{ settings.hero_subtitle }}"
+>
+
+<label>WhatsApp</label>
+
+<input
+type="text"
+name="whatsapp"
+value="{{ settings.whatsapp }}"
+>
+
+<label>Email</label>
+
+<input
+type="text"
+name="email"
+value="{{ settings.email }}"
+>
+
+<button type="submit">
+שמור שינויים
+</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>לידים שהתקבלו</h2>
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>שם</th>
+<th>טלפון</th>
+<th>אימייל</th>
+<th>תחום</th>
+<th>סטטוס</th>
+<th>תאריך</th>
+<th>פעולה</th>
+</tr>
+
+{% for lead in leads %}
+
+<tr>
+
+<td>{{ lead.id }}</td>
+<td>{{ lead.name }}</td>
+<td>{{ lead.phone }}</td>
+<td>{{ lead.email }}</td>
+<td>{{ lead.business }}</td>
+<td>{{ lead.status }}</td>
+<td>{{ lead.created_at }}</td>
+
+<td>
+
+<form
+method="POST"
+action="/update-status/{{ lead.id }}"
+style="display:inline;"
+>
+
+<select name="status">
+
+<option value="חדש">חדש</option>
+
+<option value="בטיפול">בטיפול</option>
+
+<option value="נסגר">נסגר</option>
+
+<option value="לא רלוונטי">לא רלוונטי</option>
+
+</select>
+
+<button type="submit">
+עדכן
+</button>
+
+</form>
+
+<a href="/delete-lead/{{ lead.id }}">
+מחק
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</div>
+
+</body>
+</html>
