@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, session, flash
 import sqlite3
 from datetime import datetime
 
-app = Flask(**name**)
+app = Flask(__name__)
 app.secret_key = "leadmaster_super_secret_key"
 
 DATABASE = "database.db"
